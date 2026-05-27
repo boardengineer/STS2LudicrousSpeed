@@ -4,14 +4,14 @@ using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Debug;
 
-namespace ModTemplate;
+namespace STS2LudicrousSpeed;
 
 [ModInitializer("Initialize")]
 public class Plugin
 {
     public static void Initialize()
     {
-        var harmony = new Harmony("com.author.modtemplate");
+        var harmony = new Harmony("com.author.sts2ludicrousspeed");
         harmony.PatchAll(typeof(Plugin).Assembly);
     }
 }
@@ -22,8 +22,5 @@ public class MainMenuPatch
     [HarmonyPostfix]
     public static void Postfix()
     {
-        var console = NDevConsole.Instance;
-        var outputBuffer = console.GetNode<RichTextLabel>("OutputContainer/OutputBuffer");
-        outputBuffer.Text += "[ModTemplate] Hello World!\n";
     }
 }

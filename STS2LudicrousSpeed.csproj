@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <AssemblyName>ModTemplate</AssemblyName>
-    <RootNamespace>ModTemplate</RootNamespace>
+    <AssemblyName>STS2LudicrousSpeed</AssemblyName>
+    <RootNamespace>STS2LudicrousSpeed</RootNamespace>
     <Nullable>enable</Nullable>
     <LangVersion>13.0</LangVersion>
     <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -30,5 +30,6 @@
 
   <Target Name="CopyToMods" AfterTargets="Build">
     <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(STS2GameDir)\mods" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(AssemblyName).json" DestinationFolder="$(STS2GameDir)\mods" />
   </Target>
 </Project>
