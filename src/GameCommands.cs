@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Runs;
@@ -29,11 +30,14 @@ public static class GameCommands
         var acts = ActModel.GetDefaultList();
         var modifiers = new List<ModifierModel>();
 
+        if (seed.Length == 0)
+            seed = SeedHelper.GetRandomSeed();
+
         HeadlessController.Emit(new
         {
             type = "run_starting",
             character = character.GetType().Name,
-            seed = seed.Length > 0 ? (object)seed : "(random)",
+            seed,
             acts = acts.Select(a => a.GetType().Name).ToArray()
         });
 
@@ -62,6 +66,7 @@ public static class GameCommands
                 HeadlessController.Emit(new
                 {
                     type = "run_started",
+                    seed = state.Rng.StringSeed,
                     floor = state.ActFloor,
                     act = state.CurrentActIndex,
                     ascension = state.AscensionLevel,
