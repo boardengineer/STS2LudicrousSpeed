@@ -1,3 +1,4 @@
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
 
@@ -20,3 +21,17 @@ public static class AtlasLoadPatch
     [HarmonyPrefix]
     public static bool Prefix() => !HeadlessController.IsActive;
 }
+
+// Suppress "Missing sprite '...' in ..." warnings — atlas was never loaded in headless.
+[HarmonyPatch(typeof(AtlasResourceLoader), "_Load")]
+public static class AtlasResourceLoaderPatch
+{
+    [HarmonyPrefix]
+    public static bool Prefix(ref Variant __result)
+    {
+        if (!HeadlessController.IsActive) return true;
+        __result = new Variant();
+        return false;
+    }
+}
+

@@ -10,4 +10,4 @@ cd /d "%~dp0"
 dotnet build
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-"%GAME_EXE%" --headless
+"%GAME_EXE%" --headless 2>NUL

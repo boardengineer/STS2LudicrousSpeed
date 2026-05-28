@@ -50,11 +50,31 @@ public static class GameCommands
             .ContinueWith(t =>
             {
                 if (t.IsFaulted)
+                {
                     HeadlessController.Emit(new
                     {
                         type = "error",
                         message = "Run failed to start: " + t.Exception?.GetBaseException().Message
                     });
+                    return;
+                }
+                var state = t.Result;
+                HeadlessController.Emit(new
+                {
+                    type = "run_started",
+                    floor = state.ActFloor,
+                    act = state.CurrentActIndex,
+                    ascension = state.AscensionLevel,
+                    players = state.Players.Select(p => new
+                    {
+                        character = p.Character.GetType().Name,
+                        hp = p.Creature.CurrentHp,
+                        max_hp = p.Creature.MaxHp,
+                        gold = p.Gold,
+                        deck_size = p.Deck.Cards.Count,
+                        relic_count = p.Relics.Count
+                    }).ToArray()
+                });
             });
     }
 
