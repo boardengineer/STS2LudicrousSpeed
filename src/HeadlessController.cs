@@ -134,6 +134,11 @@ public static class HeadlessController
                 Emit(new { type = "state", message = "not yet implemented" });
                 break;
             case "start_run":
+                GameCommands.StartRun(
+                    cmd["character"]?.GetValue<string>() ?? "ironclad",
+                    cmd["seed"]?.GetValue<string>() ?? "",
+                    cmd["ascension"]?.GetValue<int>() ?? 0);
+                break;
             case "play_card":
             case "end_turn":
             case "map_select":
